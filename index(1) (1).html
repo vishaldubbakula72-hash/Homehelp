@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomeHelp — Reliable Home Services Near You | Hyderabad</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'], serif: ['"Playfair Display"', 'serif'] },
+      colors: { tealDeep:'#0A3D3F', tealPrimary:'#0F5C5C', tealLight:'#E6F2F2', goldAccent:'#D4A03E', goldLight:'#FBF5E8' }
+    }}};
+  </script>
+  <style>
+    body{background:#F8FAFC;color:#1E293B;-webkit-font-smoothing:antialiased}
+    .hero-pattern{background-color:#0A3D3F;background-image:radial-gradient(at 88% 15%,rgba(212,160,62,.16) 0,transparent 50%),radial-gradient(at 12% 85%,rgba(15,92,92,.85) 0,transparent 55%),linear-gradient(135deg,#082F31 0%,#0F5C5C 100%)}
+    .gold-border-glow{border:1px solid rgba(212,160,62,.45)}
+    .service-card{transition:transform .2s,box-shadow .2s}
+    .service-card:hover{transform:translateY(-3px);box-shadow:0 16px 30px -12px rgba(10,61,63,.22)}
+    .hidden-view{display:none!important}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+  <div class="bg-[#072729] text-slate-200 text-xs py-2 px-4">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between gap-2">
+      <span>● Background & skill verification • Transparent pricing</span>
+      <span class="text-amber-300 font-semibold">Pilot Region: Hyderabad, Telangana</span>
+    </div>
+  </div>
+
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
+      <a href="#" onclick="showView('platform');return false" class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-xl bg-tealDeep text-white grid place-items-center text-2xl border border-amber-400">⌂</div>
+        <div><div class="font-serif text-2xl font-bold text-tealDeep">HomeHelp</div><p class="text-xs text-slate-500">Reliable home services near you</p></div>
+      </a>
+      <div class="flex flex-wrap items-center gap-2">
+        <select id="locality" class="border rounded-lg px-3 py-2 text-sm" aria-label="Choose locality">
+          <option>All Hyderabad</option><option>Madhapur</option><option>Gachibowli</option><option>Banjara Hills</option><option>Kondapur</option><option>Kukatpally</option>
+        </select>
+        <button onclick="showView('platform')" class="rounded-lg bg-tealDeep text-white px-4 py-2 text-sm font-semibold">Customer App</button>
+        <button onclick="showView('venture')" class="rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold">VentureLens</button>
+        <span id="userLabel" class="text-sm text-slate-600"></span>
+      </div>
+    </div>
+    <nav id="platformNav" class="border-t bg-slate-50">
+      <div class="max-w-7xl mx-auto px-4 flex gap-6 text-sm font-semibold">
+        <button class="py-3 text-tealDeep" onclick="showTab('explore')">Explore Services</button>
+        <button class="py-3 text-slate-600" onclick="showTab('bookings')">My Bookings (<span id="bookingCount">0</span>)</button>
+        <button class="py-3 text-slate-600" onclick="showTab('profile')">Household Profile</button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="platformView" class="flex-1">
+    <section id="exploreTab">
+      <section class="hero-pattern text-white">
+        <div class="max-w-7xl mx-auto px-4 py-14 grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <span class="inline-block rounded-full border border-amber-300/50 bg-white/10 px-4 py-2 text-xs font-semibold text-amber-100">Verified local professionals</span>
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold leading-tight mt-5">Trusted Professionals for a <em class="text-amber-300">Better Home</em></h1>
+            <p class="mt-5 text-teal-50 leading-7">Book reliable plumbers, electricians, cleaners, carpenters and more across Hyderabad with clear upfront pricing.</p>
+            <div class="mt-7 bg-white p-2 rounded-2xl flex flex-col sm:flex-row gap-2 max-w-2xl">
+              <input id="searchInput" oninput="renderProviders()" class="flex-1 min-w-0 rounded-xl bg-slate-50 px-4 py-3 text-slate-800 outline-none" placeholder="Search a service or professional...">
+              <select id="categoryFilter" onchange="renderProviders()" class="rounded-xl bg-slate-50 px-3 py-3 text-slate-800">
+                <option value="All">All Categories</option><option>Plumbing</option><option>Electrical</option><option>Cleaning</option><option>Carpentry</option><option>Appliance Repair</option><option>Painting</option>
+              </select>
+              <button onclick="document.getElementById('providers').scrollIntoView({behavior:'smooth'})" class="bg-tealDeep hover:bg-tealPrimary text-white rounded-xl px-5 py-3 font-semibold">Find Experts</button>
+            </div>
+            <div class="flex gap-8 mt-7 text-sm"><div><b class="block text-xl">Verified</b><span class="text-teal-100">ID & skill checks</span></div><div><b class="block text-xl">₹249+</b><span class="text-teal-100">Starting prices</span></div><div><b class="block text-xl">Pay later</b><span class="text-teal-100">After service</span></div></div>
+          </div>
+          <div class="bg-white text-slate-800 rounded-2xl p-6 shadow-2xl gold-border-glow">
+            <div class="flex justify-between items-center"><span class="bg-amber-50 text-amber-900 rounded-full px-3 py-1 text-xs font-bold">FEATURED PROFESSIONAL</span><span class="text-amber-500">★★★★★</span></div>
+            <div class="flex gap-4 items-center mt-5">
+              <div class="w-20 h-20 rounded-2xl bg-tealLight grid place-items-center text-4xl">👨🏽‍🔧</div>
+              <div><h2 class="font-bold text-xl">Ramesh Kumar</h2><p class="text-sm text-slate-500">Senior Plumber • Hyderabad</p><p class="text-sm text-emerald-700 font-semibold mt-1">✓ Demo verified profile</p></div>
+            </div>
+            <p class="text-sm text-slate-600 mt-5">General plumbing inspection and common household repairs. Final cost should be confirmed with the professional before work begins.</p>
+            <button onclick="bookProvider(1)" class="mt-5 w-full rounded-xl bg-tealDeep text-white py-3 font-semibold">Request a Booking</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="max-w-7xl mx-auto px-4 py-12">
+        <div class="flex flex-wrap justify-between items-end gap-3 mb-6">
+          <div><p class="text-tealPrimary text-xs font-bold uppercase tracking-widest">HomeHelp network</p><h2 class="font-serif text-3xl font-bold text-tealDeep mt-1">Explore Services</h2><p class="text-slate-500 text-sm mt-2">Choose a service and compare available demo providers.</p></div>
+          <span class="text-xs text-slate-500">Illustrative prototype listings</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 mb-10">
+          <button onclick="chooseCategory('Plumbing')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">🔧</div><b class="block mt-2">Plumbing</b><small class="text-slate-500">From ₹299</small></button>
+          <button onclick="chooseCategory('Electrical')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">💡</div><b class="block mt-2">Electrical</b><small class="text-slate-500">From ₹249</small></button>
+          <button onclick="chooseCategory('Cleaning')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">🧹</div><b class="block mt-2">Cleaning</b><small class="text-slate-500">From ₹499</small></button>
+          <button onclick="chooseCategory('Carpentry')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">🪚</div><b class="block mt-2">Carpentry</b><small class="text-slate-500">From ₹349</small></button>
+          <button onclick="chooseCategory('Appliance Repair')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">🛠️</div><b class="block mt-2">Appliance Repair</b><small class="text-slate-500">From ₹399</small></button>
+          <button onclick="chooseCategory('Painting')" class="service-card bg-white border rounded-xl p-4 text-left"><div class="text-3xl">🎨</div><b class="block mt-2">Painting</b><small class="text-slate-500">From ₹799</small></button>
+        </div>
+        <div id="providers" class="scroll-mt-36">
+          <h2 class="font-serif text-2xl font-bold text-tealDeep mb-4">Available Professionals</h2>
+          <div id="providerGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="bookingsTab" class="hidden-view max-w-7xl mx-auto px-4 py-12">
+      <h1 class="font-serif text-3xl font-bold text-tealDeep">My Bookings</h1><p class="text-slate-500 mt-2">Your booking requests are saved in this browser for this demo.</p>
+      <div id="bookingList" class="mt-6 space-y-4"></div>
+    </section>
+
+    <section id="profileTab" class="hidden-view max-w-2xl mx-auto px-4 py-12">
+      <h1 class="font-serif text-3xl font-bold text-tealDeep">Household Profile</h1>
+      <form id="profileForm" class="bg-white border rounded-2xl p-6 mt-6 space-y-4">
+        <label class="block text-sm font-semibold">Full name<input id="profileName" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal" required placeholder="Your name"></label>
+        <label class="block text-sm font-semibold">Phone number<input id="profilePhone" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal" inputmode="numeric" placeholder="Your contact number"></label>
+        <label class="block text-sm font-semibold">Household address<textarea id="profileAddress" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal" rows="3" placeholder="Area, street and landmark"></textarea></label>
+        <button class="bg-tealDeep text-white rounded-lg px-5 py-3 font-semibold">Save Profile</button>
+        <p id="profileMessage" class="text-sm text-emerald-700"></p>
+      </form>
+    </section>
+  </main>
+
+  <main id="ventureView" class="hidden-view flex-1">
+    <section class="hero-pattern text-white"><div class="max-w-7xl mx-auto px-4 py-16">
+      <p class="text-amber-300 text-xs uppercase tracking-widest font-bold">VentureLens</p><h1 class="font-serif text-4xl sm:text-5xl font-bold mt-3">A more trusted way to care for your home.</h1>
+      <p class="max-w-2xl mt-5 text-teal-50 leading-7">HomeHelp is a concept for connecting households with local service professionals through transparent pricing, discovery tools and a consistent booking experience.</p>
+    </div></section>
+    <section class="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-5">
+      <article class="bg-white border rounded-2xl p-6"><div class="text-3xl">🏠</div><h2 class="font-bold text-xl mt-3">Customer need</h2><p class="text-slate-600 text-sm mt-2">Make it easier to discover and request household services in one place.</p></article>
+      <article class="bg-white border rounded-2xl p-6"><div class="text-3xl">🛡️</div><h2 class="font-bold text-xl mt-3">Trust-led model</h2><p class="text-slate-600 text-sm mt-2">Design around identity checks, skill validation, clear scope and customer feedback.</p></article>
+      <article class="bg-white border rounded-2xl p-6"><div class="text-3xl">📍</div><h2 class="font-bold text-xl mt-3">Local-first launch</h2><p class="text-slate-600 text-sm mt-2">A Hyderabad pilot concept with locality-based discovery and a focused service catalogue.</p></article>
+    </section>
+  </main>
+
+  <footer class="bg-[#072729] text-slate-300 mt-auto"><div class="max-w-7xl mx-auto px-4 py-7 flex flex-wrap justify-between gap-3 text-sm"><span>© 2026 HomeHelp Prototype</span><span>Built for demonstration • Hyderabad, Telangana</span></div></footer>
+
+  <div id="toast" class="fixed bottom-5 right-5 z-50 hidden bg-slate-900 text-white rounded-xl px-5 py-3 shadow-xl text-sm" role="status"></div>
+
+  <dialog id="bookingDialog" class="rounded-2xl p-0 w-[min(92vw,480px)] shadow-2xl">
+    <form id="bookingForm" class="p-6 space-y-4">
+      <div class="flex justify-between items-center"><h2 class="font-serif text-2xl font-bold text-tealDeep">Request a Booking</h2><button type="button" onclick="closeBooking()" class="text-2xl text-slate-400" aria-label="Close">×</button></div>
+      <p id="bookingProvider" class="text-sm text-slate-500"></p>
+      <input type="hidden" id="providerId">
+      <label class="block text-sm font-semibold">Your name<input id="bookingName" required class="mt-1 w-full border rounded-lg px-3 py-2 font-normal"></label>
+      <label class="block text-sm font-semibold">Phone number<input id="bookingPhone" required inputmode="numeric" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal"></label>
+      <label class="block text-sm font-semibold">Service address<textarea id="bookingAddress" required rows="2" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal"></textarea></label>
+      <label class="block text-sm font-semibold">Preferred date<input id="bookingDate" type="date" required class="mt-1 w-full border rounded-lg px-3 py-2 font-normal"></label>
+      <label class="block text-sm font-semibold">Describe the work<textarea id="bookingNotes" rows="2" class="mt-1 w-full border rounded-lg px-3 py-2 font-normal" placeholder="Briefly describe what you need"></textarea></label>
+      <p class="text-xs text-slate-500">Demo only: this creates a local request, not a confirmed appointment.</p>
+      <button class="w-full bg-tealDeep text-white rounded-lg py-3 font-semibold">Submit Request</button>
+    </form>
+  </dialog>
+
+  <script>
+    const providers = [
+      {id:1,name:'Ramesh Kumar',category:'Plumbing',service:'Tap, leak and pipe repairs',price:299,rating:'4.9',area:'Madhapur',emoji:'👨🏽‍🔧'},
+      {id:2,name:'Suresh Reddy',category:'Electrical',service:'Switches, fans and wiring checks',price:249,rating:'4.8',area:'Gachibowli',emoji:'👨🏽‍🔧'},
+      {id:3,name:'Anita Services',category:'Cleaning',service:'Kitchen and deep cleaning',price:499,rating:'4.9',area:'Kondapur',emoji:'🧹'},
+      {id:4,name:'Imran Shaik',category:'Carpentry',service:'Furniture assembly and repairs',price:349,rating:'4.7',area:'Kukatpally',emoji:'🪚'},
+      {id:5,name:'Kiran Kumar',category:'Appliance Repair',service:'Washing machine and refrigerator checks',price:399,rating:'4.8',area:'Banjara Hills',emoji:'🛠️'},
+      {id:6,name:'Mahesh Painting',category:'Painting',service:'Wall touch-ups and painting consultation',price:799,rating:'4.7',area:'Madhapur',emoji:'🎨'}
+    ];
+    const read = (key, fallback) => { try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; } };
+    let bookings = read('homehelp_bookings', []);
+    let profile = read('homehelp_profile', {});
+    function save(){ localStorage.setItem('homehelp_bookings', JSON.stringify(bookings)); updateCounts(); }
+    function updateCounts(){ document.getElementById('bookingCount').textContent=bookings.length; }
+    function toast(message){ const el=document.getElementById('toast'); el.textContent=message; el.classList.remove('hidden'); clearTimeout(window.toastTimer); window.toastTimer=setTimeout(()=>el.classList.add('hidden'),2800); }
+    function showView(view){
+      const venture=view==='venture';
+      document.getElementById('platformView').classList.toggle('hidden-view',venture);
+      document.getElementById('ventureView').classList.toggle('hidden-view',!venture);
+      document.getElementById('platformNav').classList.toggle('hidden-view',venture);
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    function showTab(tab){
+      ['explore','bookings','profile'].forEach(name=>document.getElementById(name+'Tab').classList.toggle('hidden-view',name!==tab));
+      if(tab==='bookings') renderBookings();
+      if(tab==='profile') loadProfile();
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    function chooseCategory(category){ document.getElementById('categoryFilter').value=category; renderProviders(); document.getElementById('providers').scrollIntoView({behavior:'smooth'}); }
+    function renderProviders(){
+      const term=document.getElementById('searchInput').value.toLowerCase();
+      const category=document.getElementById('categoryFilter').value;
+      const locality=document.getElementById('locality').value;
+      const filtered=providers.filter(p=>(category==='All'||p.category===category)&&(locality==='All Hyderabad'||p.area===locality)&&[p.name,p.category,p.service,p.area].join(' ').toLowerCase().includes(term));
+      const grid=document.getElementById('providerGrid');
+      grid.innerHTML=filtered.length?filtered.map(p=>`<article class="bg-white border border-slate-200 rounded-2xl p-5 service-card"><div class="flex justify-between"><div class="w-14 h-14 bg-tealLight rounded-xl grid place-items-center text-3xl">${p.emoji}</div><span class="text-amber-500 text-sm">★ ${p.rating}</span></div><h3 class="font-bold text-lg mt-4">${p.name}</h3><p class="text-tealPrimary text-xs font-bold mt-1">${p.category}</p><p class="text-slate-500 text-sm mt-2">${p.service}</p><div class="flex justify-between items-center mt-5"><div><b class="text-xl text-tealDeep">₹${p.price}+</b><p class="text-xs text-slate-400">${p.area}</p></div><button onclick="bookProvider(${p.id})" class="bg-tealDeep text-white rounded-lg px-4 py-2 text-sm font-semibold">Book</button></div></article>`).join(''):'<p class="col-span-full bg-white border rounded-xl p-6 text-slate-500">No matching demo providers. Try another category or locality.</p>';
+    }
+    function bookProvider(id){
+      const p=providers.find(item=>item.id===id); if(!p)return;
+      document.getElementById('providerId').value=id;
+      document.getElementById('bookingProvider').textContent=`${p.name} • ${p.category} • Starting at ₹${p.price}`;
+      document.getElementById('bookingName').value=profile.name||'';
+      document.getElementById('bookingPhone').value=profile.phone||'';
+      document.getElementById('bookingAddress').value=profile.address||'';
+      document.getElementById('bookingDate').min=new Date().toISOString().split('T')[0];
+      document.getElementById('bookingDialog').showModal();
+    }
+    function closeBooking(){document.getElementById('bookingDialog').close();}
+    document.getElementById('bookingForm').addEventListener('submit',e=>{
+      e.preventDefault();
+      const p=providers.find(item=>item.id===Number(document.getElementById('providerId').value));
+      bookings.unshift({id:Date.now(),provider:p.name,category:p.category,price:p.price,name:document.getElementById('bookingName').value,phone:document.getElementById('bookingPhone').value,address:document.getElementById('bookingAddress').value,date:document.getElementById('bookingDate').value,notes:document.getElementById('bookingNotes').value,status:'Request submitted'});
+      save(); closeBooking(); e.target.reset(); toast('Your demo booking request has been saved.'); showTab('bookings');
+    });
+    function renderBookings(){
+      const list=document.getElementById('bookingList');
+      list.innerHTML=bookings.length?bookings.map(b=>`<article class="bg-white border rounded-2xl p-5"><div class="flex flex-wrap justify-between gap-2"><div><h3 class="font-bold text-lg">${b.category} with ${b.provider}</h3><p class="text-sm text-slate-500 mt-1">${b.date} • ${b.address}</p></div><span class="text-xs bg-amber-50 text-amber-800 rounded-full px-3 py-1 h-fit">${b.status}</span></div><p class="text-sm text-slate-600 mt-3">${b.notes||'No extra details provided.'}</p><div class="flex justify-between items-center mt-4"><b class="text-tealDeep">Starting at ₹${b.price}</b><button onclick="cancelBooking(${b.id})" class="text-sm text-red-600 font-semibold">Remove</button></div></article>`).join(''):'<div class="bg-white border rounded-2xl p-8 text-center text-slate-500">You have no booking requests yet. Explore services to get started.</div>';
+    }
+    function cancelBooking(id){bookings=bookings.filter(b=>b.id!==id);save();renderBookings();toast('Booking request removed from this demo.');}
+    function loadProfile(){document.getElementById('profileName').value=profile.name||'';document.getElementById('profilePhone').value=profile.phone||'';document.getElementById('profileAddress').value=profile.address||'';}
+    document.getElementById('profileForm').addEventListener('submit',e=>{
+      e.preventDefault(); profile={name:document.getElementById('profileName').value,phone:document.getElementById('profilePhone').value,address:document.getElementById('profileAddress').value};
+      localStorage.setItem('homehelp_profile',JSON.stringify(profile)); document.getElementById('userLabel').textContent='Hello, '+profile.name; document.getElementById('profileMessage').textContent='Profile saved in this browser.'; toast('Profile saved.');
+    });
+    document.getElementById('locality').addEventListener('change',renderProviders);
+    updateCounts(); renderProviders(); loadProfile();
+    if(profile.name) document.getElementById('userLabel').textContent='Hello, '+profile.name;
+  </script>
+</body>
+</html>
